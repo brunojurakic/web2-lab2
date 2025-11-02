@@ -2,24 +2,29 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle, CheckCircle2, Shield, ShieldAlert } from "lucide-react"
 
+interface LoginResult {
+  success: boolean
+  message: string
+  user?: {
+    id: number
+    username: string
+    email: string
+  }
+  queryExecuted?: string
+}
+
 export default function Home() {
   const [isVulnerable, setIsVulnerable] = useState(true)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [result, setResult] = useState<any>(null)
+  const [result, setResult] = useState<LoginResult | null>(null)
   const [loading, setLoading] = useState(false)
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -168,6 +173,21 @@ export default function Home() {
                   Sigurno: Napad je blokiran
                 </p>
               </div>
+            </div>
+
+            <div className="border-t pt-4 space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Ranjiva verzija spaja korisnički unos direktno u SQL upit bez
+                provjere. Napadač može unijeti posebne znakove koji mijenjaju
+                logiku upita, poput uvjeta koji je uvijek istinit, što omogućuje
+                prijavu bez valjane lozinke.
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Sigurna verzija koristi parametrizirane upite gdje se SQL kod
+                odvaja od podataka (Drizzle ORM ovo radi automatski). Unos se
+                validira, što sprječava izvršavanje zlonamjernog koda u bazi
+                podataka.
+              </p>
             </div>
 
             <div className="border-t pt-4">

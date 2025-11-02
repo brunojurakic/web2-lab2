@@ -12,6 +12,20 @@ const loginSchema = z.object({
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
+
+    if (
+      typeof body.username !== "string" ||
+      typeof body.password !== "string"
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Neispravni parametri",
+        },
+        { status: 400 },
+      )
+    }
+
     const validatedData = loginSchema.parse(body)
     const { username, password } = validatedData
 
