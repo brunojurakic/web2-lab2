@@ -1,13 +1,14 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, CheckCircle2, Shield, ShieldAlert } from "lucide-react"
+import { AlertCircle, CheckCircle2 } from "lucide-react"
 
 interface LoginResult {
   success: boolean
@@ -53,8 +54,12 @@ export default function SqlInjectionPage() {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto space-y-6">
-        <div className="text-center space-y-2">
+        <div className="flex items-center justify-between">
           <h1 className="text-4xl font-bold">SQL Injection</h1>
+
+          <Link href="/">
+            <Button>Natrag na zadatke</Button>
+          </Link>
         </div>
 
         <Card className="border-2">
@@ -62,17 +67,7 @@ export default function SqlInjectionPage() {
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="flex items-center gap-2">
-                  {isVulnerable ? (
-                    <>
-                      <ShieldAlert className="h-5 w-5 text-red-500" />
-                      Ranjiva verzija
-                    </>
-                  ) : (
-                    <>
-                      <Shield className="h-5 w-5 text-green-500" />
-                      Sigurna verzija
-                    </>
-                  )}
+                  {isVulnerable ? <>Ranjiva verzija</> : <>Sigurna verzija</>}
                 </CardTitle>
               </div>
               <div className="flex items-center gap-2">
@@ -132,7 +127,7 @@ export default function SqlInjectionPage() {
                     </div>
                   )}
                   {result.queryExecuted && (
-                    <div className="mt-2 rounded text-sm font-mono">
+                    <div className="mt-2 rounded text-sm">
                       <p className="text-xs mb-1">SQL upit:</p>
                       {result.queryExecuted}
                     </div>
@@ -151,7 +146,8 @@ export default function SqlInjectionPage() {
             <div className="space-y-3">
               <div>
                 <h3 className="font-semibold mb-2">
-                  1. Testirajte normalnu prijavu
+                  1. Testirajte normalnu prijavu (gore desno switch za izbor
+                  ranjivo/sigurno)
                 </h3>
                 <div className="p-3 bg-muted rounded text-sm space-y-1">
                   <p>Korisničko ime: admin</p>
@@ -161,7 +157,8 @@ export default function SqlInjectionPage() {
 
               <div>
                 <h3 className="font-semibold mb-2">
-                  2. Testirajte SQL Injection verziju
+                  2. Testirajte SQL Injection verziju (gore desno switch za
+                  izbor ranjivo/sigurno)
                 </h3>
                 <div className="p-3 bg-muted rounded text-sm space-y-1">
                   <p>Korisničko ime: admin&apos; OR &apos;1&apos;=&apos;1</p>
@@ -179,14 +176,14 @@ export default function SqlInjectionPage() {
               <p className="text-sm text-muted-foreground">
                 Ranjiva verzija spaja korisnički unos direktno u SQL upit bez
                 provjere. Napadač može unijeti posebne znakove koji mijenjaju
-                logiku upita, poput uvjeta koji je uvijek istinit, što omogućuje
-                prijavu bez valjane lozinke.
+                logiku upita, npr. uvjet koji je uvijek istinit, što omogućuje
+                prijavu bez prave lozinke.
               </p>
               <p className="text-sm text-muted-foreground">
                 Sigurna verzija koristi parametrizirane upite gdje se SQL kod
-                odvaja od podataka (Drizzle ORM ovo radi automatski). Unos se
-                validira, što sprječava izvršavanje zlonamjernog koda u bazi
-                podataka.
+                odvaja od podataka (Drizzle ORM koji koristim ovo radi
+                automatski). Unos se validira, što sprječava izvršavanje
+                zlonamjernog koda u bazi podataka.
               </p>
             </div>
 
