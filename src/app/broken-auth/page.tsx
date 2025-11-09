@@ -231,7 +231,7 @@ const BrokenAuthPage = () => {
 
                   <p className="mt-3">Sigurna verzija:</p>
                   <ul className="list-disc list-inside space-y-1 ml-2">
-                    <li>Rate limiting - maksimalno 3 pokušaja u 2 minute</li>
+                    <li>Rate limiting - maksimalno 3 pokušaja u 2 minute (po IP adresi)</li>
                     <li>Nejasne poruke ne otkrivaju što je krivo u formi</li>
                     <li>Nakon 3 pokušaja mora se čekat</li>
                   </ul>
@@ -289,6 +289,20 @@ const BrokenAuthPage = () => {
                     </li>
                   </ul>
                 </div>
+              </div>
+            </div>
+
+            <div className="border-t pt-4">
+              <h3 className="font-semibold mb-2">Dodatne obrane koje bih dodao u prave aplikacije:</h3>
+              <div className="p-3 bg-muted rounded text-sm space-y-2">
+                <ul className="list-disc list-inside space-y-1 ml-2">
+                  <li>
+                    Može se dodat dvofaktorska autentifikacija
+                  </li>
+                  <li>
+                    Captcha za zaštitu od botova, npr. recaptcha, botid, turnstile...
+                  </li>
+                </ul>
               </div>
             </div>
 

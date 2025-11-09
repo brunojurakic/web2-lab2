@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     if (result.length > 0) {
       return NextResponse.json({
         success: true,
-        message: "Prijava uspješna (sigurna verzija)",
+        message: "Prijava uspješna",
         user: {
           id: result[0].id,
           username: result[0].username,

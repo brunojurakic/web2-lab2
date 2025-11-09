@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle, CheckCircle2 } from "lucide-react"
 
 interface LoginResult {
   success: boolean
@@ -71,11 +70,11 @@ export default function SqlInjectionPage() {
                 </CardTitle>
               </div>
               <div className="flex items-center gap-2">
-                <Label htmlFor="vulnerability-toggle">
+                <Label htmlFor="toggle">
                   {isVulnerable ? "Ranjivo" : "Sigurno"}
                 </Label>
                 <Switch
-                  id="vulnerability-toggle"
+                  id="toggle"
                   checked={!isVulnerable}
                   onCheckedChange={(checked) => setIsVulnerable(!checked)}
                 />
@@ -99,7 +98,7 @@ export default function SqlInjectionPage() {
                 <Label htmlFor="password">Lozinka</Label>
                 <Input
                   id="password"
-                  type="text"
+                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Unesite lozinku"
@@ -113,11 +112,6 @@ export default function SqlInjectionPage() {
 
             {result && (
               <Alert variant={result.success ? "default" : "destructive"}>
-                {result.success ? (
-                  <CheckCircle2 className="h-4 w-4" />
-                ) : (
-                  <AlertCircle className="h-4 w-4" />
-                )}
                 <AlertTitle>{result.success ? "Uspjeh" : "Greška"}</AlertTitle>
                 <AlertDescription className="space-y-2">
                   <p>{result.message}</p>
@@ -174,16 +168,17 @@ export default function SqlInjectionPage() {
 
             <div className="border-t pt-4 space-y-4">
               <p className="text-sm text-muted-foreground">
-                Ranjiva verzija spaja korisnički unos direktno u SQL upit bez
-                provjere. Napadač može unijeti posebne znakove koji mijenjaju
-                logiku upita, npr. uvjet koji je uvijek istinit, što omogućuje
-                prijavu bez prave lozinke.
+                Ranjiva verzija spaja ono što korisnik unese direktno u SQL upit
+                bez provjere. Napadač može unijeti posebne znakove koji
+                mijenjaju logiku upita, npr. uvjet koji je uvijek istinit, što
+                omogućuje prijavu bez prave lozinke.
               </p>
               <p className="text-sm text-muted-foreground">
                 Sigurna verzija koristi parametrizirane upite gdje se SQL kod
                 odvaja od podataka (Drizzle ORM koji koristim ovo radi
-                automatski). Unos se validira, što sprječava izvršavanje
-                zlonamjernog koda u bazi podataka.
+                automatski). Korištenje ORM-a uklanja skoro sve probleme sa SQL
+                injectionom, ali za svaki slučaj unos se validira (koristim Zod)
+                kako bi bio 100% siguran da se sastoji od običnog teksta.
               </p>
             </div>
 
